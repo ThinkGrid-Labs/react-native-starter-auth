@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Brand } from '../../components';
 import { useAuth } from '../../context/AuthContext';
 
@@ -30,9 +23,7 @@ const Home = () => {
         </View>
 
         <View style={styles.card}>
-          <Text style={styles.greeting}>
-            {user?.name ? `Hello, ${user.name}!` : 'Welcome!'}
-          </Text>
+          <Text style={styles.greeting}>{user?.name ? `Hello, ${user.name}!` : 'Welcome!'}</Text>
           <Text style={styles.email}>{user?.email ?? ''}</Text>
         </View>
 

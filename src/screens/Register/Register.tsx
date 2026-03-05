@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -37,7 +37,9 @@ const Register = ({ navigation }: Props) => {
   const confirmRef = useRef<TextInput>(null);
 
   useEffect(() => {
-    if (error) clearError();
+    if (error) {
+      clearError();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, email, password, confirmPassword]);
 
@@ -65,11 +67,13 @@ const Register = ({ navigation }: Props) => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleRegister = useCallback(async () => {
+  const handleRegister = async () => {
     Keyboard.dismiss();
-    if (!validate()) return;
+    if (!validate()) {
+      return;
+    }
     await register(name.trim(), email.trim().toLowerCase(), password);
-  }, [name, email, password, register]);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -149,10 +153,7 @@ const Register = ({ navigation }: Props) => {
 
         <View style={styles.footerRow}>
           <Text style={styles.footerText}>Already have an account? </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Login')}
-            accessibilityRole="link"
-          >
+          <TouchableOpacity onPress={() => navigation.navigate('Login')} accessibilityRole="link">
             <Text style={styles.footerLink}>Sign In</Text>
           </TouchableOpacity>
         </View>

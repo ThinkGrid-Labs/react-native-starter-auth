@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -25,7 +25,9 @@ const ForgotPassword = ({ navigation }: Props) => {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    if (error) clearError();
+    if (error) {
+      clearError();
+    }
     setEmailError(undefined);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email]);
@@ -42,12 +44,16 @@ const ForgotPassword = ({ navigation }: Props) => {
     return true;
   };
 
-  const handleSubmit = useCallback(async () => {
+  const handleSubmit = async () => {
     Keyboard.dismiss();
-    if (!validate()) return;
-    await forgotPassword(email.trim().toLowerCase());
-    if (!error) setSent(true);
-  }, [email, forgotPassword, error]);
+    if (!validate()) {
+      return;
+    }
+    const success = await forgotPassword(email.trim().toLowerCase());
+    if (success) {
+      setSent(true);
+    }
+  };
 
   if (sent) {
     return (
@@ -82,9 +88,7 @@ const ForgotPassword = ({ navigation }: Props) => {
         </View>
 
         <Text style={styles.title}>Forgot password?</Text>
-        <Text style={styles.subtitle}>
-          Enter your email and we'll send you a reset link.
-        </Text>
+        <Text style={styles.subtitle}>Enter your email and we'll send you a reset link.</Text>
 
         {error ? (
           <View style={styles.apiError}>

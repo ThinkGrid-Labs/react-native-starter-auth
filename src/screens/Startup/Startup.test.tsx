@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import { screen, waitFor } from '@testing-library/react-native';
 import Startup from './Startup';
 import { mockNavigation, mockStoredSession, renderWithAuth } from '../../__tests__/test-utils';
@@ -10,7 +11,6 @@ const render = (authenticated = false) =>
 describe('Startup screen', () => {
   it('shows a spinner while loading', () => {
     render();
-    const { ActivityIndicator } = require('react-native');
     // UNSAFE_getByType is fine here; just checking spinner renders
     expect(screen.UNSAFE_getByType(ActivityIndicator)).toBeTruthy();
   });

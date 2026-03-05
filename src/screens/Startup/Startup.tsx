@@ -8,7 +8,9 @@ const Startup = ({ navigation }: ApplicationScreenProps) => {
   const { isLoading, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (isLoading) return;
+    if (isLoading) {
+      return;
+    }
 
     navigation.reset({
       index: 0,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import Button from './Button';
 
@@ -31,13 +32,11 @@ describe('Button', () => {
 
   it('shows ActivityIndicator when loading', () => {
     const { UNSAFE_getByType } = render(<Button title="Saving" loading />);
-    const { ActivityIndicator } = require('react-native');
     expect(UNSAFE_getByType(ActivityIndicator)).toBeTruthy();
   });
 
   it('does not show ActivityIndicator when not loading', () => {
     const { UNSAFE_queryByType } = render(<Button title="Save" />);
-    const { ActivityIndicator } = require('react-native');
     expect(UNSAFE_queryByType(ActivityIndicator)).toBeNull();
   });
 

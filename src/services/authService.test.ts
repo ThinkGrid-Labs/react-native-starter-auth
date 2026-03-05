@@ -1,10 +1,5 @@
 import * as Keychain from 'react-native-keychain';
-import {
-  clearStoredTokens,
-  createAuthApi,
-  getStoredTokens,
-  storeTokens,
-} from './authService';
+import { clearStoredTokens, createAuthApi, getStoredTokens, storeTokens } from './authService';
 
 const SERVICE = 'test_service';
 const TOKENS = { accessToken: 'acc', refreshToken: 'ref' };
@@ -23,11 +18,9 @@ describe('storeTokens', () => {
 
   it('uses default service when none provided', async () => {
     await storeTokens(TOKENS);
-    expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
-      'auth_tokens',
-      expect.any(String),
-      { service: 'rn_starter_auth' },
-    );
+    expect(Keychain.setGenericPassword).toHaveBeenCalledWith('auth_tokens', expect.any(String), {
+      service: 'rn_starter_auth',
+    });
   });
 });
 
@@ -88,12 +81,19 @@ describe('createAuthApi', () => {
 
   describe('login', () => {
     it('POSTs to /auth/login and returns response data', async () => {
-      const payload = { user: { id: '1', email: 'a@b.com' }, accessToken: 'tok', refreshToken: 'ref' };
+      const payload = {
+        user: { id: '1', email: 'a@b.com' },
+        accessToken: 'tok',
+        refreshToken: 'ref',
+      };
       mockFetchOk(payload);
       const result = await api.login('a@b.com', 'pass');
       expect(global.fetch).toHaveBeenCalledWith(
         `${BASE_URL}/auth/login`,
-        expect.objectContaining({ method: 'POST', body: JSON.stringify({ email: 'a@b.com', password: 'pass' }) }),
+        expect.objectContaining({
+          method: 'POST',
+          body: JSON.stringify({ email: 'a@b.com', password: 'pass' }),
+        }),
       );
       expect(result).toEqual(payload);
     });
@@ -154,10 +154,7 @@ describe('createAuthApi', () => {
       });
       mockFetchOk({ user: { id: '1', email: 'a@b.com' }, accessToken: 'tok' });
       await customApi.login('a@b.com', 'pass');
-      expect(global.fetch).toHaveBeenCalledWith(
-        `${BASE_URL}/v2/sign-in`,
-        expect.anything(),
-      );
+      expect(global.fetch).toHaveBeenCalledWith(`${BASE_URL}/v2/sign-in`, expect.anything());
     });
   });
 });

@@ -49,11 +49,10 @@ interface WrapperOptions extends RenderOptions {
 
 export const renderWithAuth = (ui: React.ReactElement, options: WrapperOptions = {}) => {
   const { authenticated = false, ...rest } = options;
-  if (authenticated) mockStoredSession();
-  return render(
-    <AuthProvider config={TEST_CONFIG}>{ui}</AuthProvider>,
-    rest,
-  );
+  if (authenticated) {
+    mockStoredSession();
+  }
+  return render(<AuthProvider config={TEST_CONFIG}>{ui}</AuthProvider>, rest);
 };
 
 /** Mock navigation prop for screens that receive it directly */

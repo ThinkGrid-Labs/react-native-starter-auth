@@ -14,7 +14,14 @@ interface ButtonProps extends TouchableOpacityProps {
   variant?: 'primary' | 'ghost';
 }
 
-const Button = ({ title, loading, variant = 'primary', disabled, style, ...props }: ButtonProps) => {
+const Button = ({
+  title,
+  loading,
+  variant = 'primary',
+  disabled,
+  style,
+  ...props
+}: ButtonProps) => {
   const isPrimary = variant === 'primary';
   const isDisabled = disabled || loading;
 
@@ -37,7 +44,7 @@ const Button = ({ title, loading, variant = 'primary', disabled, style, ...props
           <ActivityIndicator
             size="small"
             color={isPrimary ? '#FFFFFF' : '#2563EB'}
-            style={{ marginRight: 8 }}
+            style={styles.indicator}
           />
           <Text style={[styles.label, isPrimary ? styles.labelPrimary : styles.labelGhost]}>
             {title}
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  indicator: { marginRight: 8 },
   label: {
     fontSize: 15,
     fontWeight: '600',

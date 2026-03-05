@@ -6,12 +6,7 @@ import React, {
   useMemo,
   useReducer,
 } from 'react';
-import {
-  AuthConfig,
-  AuthContextValue,
-  AuthState,
-  User,
-} from '../types/auth';
+import { AuthConfig, AuthContextValue, AuthState, User } from '../types/auth';
 import {
   clearStoredTokens,
   createAuthApi,
@@ -171,7 +166,9 @@ export const AuthProvider = ({ children, config }: AuthProviderProps) => {
   const logout = useCallback(async () => {
     try {
       if (state.accessToken) {
-        await api.logout(state.accessToken).catch(() => {/* best-effort */});
+        await api.logout(state.accessToken).catch(() => {
+          /* best-effort */
+        });
       }
     } finally {
       await clearStoredTokens(keychainService);
@@ -180,16 +177,18 @@ export const AuthProvider = ({ children, config }: AuthProviderProps) => {
   }, [api, keychainService, state.accessToken]);
 
   const forgotPassword = useCallback(
-    async (email: string) => {
+    async (email: string): Promise<boolean> => {
       dispatch({ type: 'SET_LOADING', isLoading: true });
       try {
         await api.forgotPassword(email);
         dispatch({ type: 'SET_LOADING', isLoading: false });
+        return true;
       } catch (err) {
         dispatch({
           type: 'SET_ERROR',
           error: err instanceof Error ? err.message : 'Failed to send reset email.',
         });
+        return false;
       }
     },
     [api],

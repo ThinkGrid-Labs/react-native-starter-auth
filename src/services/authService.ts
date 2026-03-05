@@ -9,18 +9,16 @@ export const storeTokens = async (
   tokens: AuthTokens,
   service: string = DEFAULT_SERVICE,
 ): Promise<void> => {
-  await Keychain.setGenericPassword(
-    'auth_tokens',
-    JSON.stringify(tokens),
-    { service },
-  );
+  await Keychain.setGenericPassword('auth_tokens', JSON.stringify(tokens), { service });
 };
 
 export const getStoredTokens = async (
   service: string = DEFAULT_SERVICE,
 ): Promise<AuthTokens | null> => {
   const result = await Keychain.getGenericPassword({ service });
-  if (!result) return null;
+  if (!result) {
+    return null;
+  }
   try {
     return JSON.parse(result.password) as AuthTokens;
   } catch {
@@ -28,9 +26,7 @@ export const getStoredTokens = async (
   }
 };
 
-export const clearStoredTokens = async (
-  service: string = DEFAULT_SERVICE,
-): Promise<void> => {
+export const clearStoredTokens = async (service: string = DEFAULT_SERVICE): Promise<void> => {
   await Keychain.resetGenericPassword({ service });
 };
 
@@ -78,7 +74,7 @@ async function request<T>(
   };
 
   if (accessToken) {
-    headers['Authorization'] = `Bearer ${accessToken}`;
+    headers.Authorization = `Bearer ${accessToken}`;
   }
 
   const response = await fetch(`${baseURL}${path}`, { ...options, headers });

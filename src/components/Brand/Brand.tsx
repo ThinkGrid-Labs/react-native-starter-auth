@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Image, DimensionValue } from 'react-native';
-import Images from '../../assets'
+import { Image, StyleSheet, View, DimensionValue } from 'react-native';
+import Images from '../../assets';
 type Props = {
   height?: DimensionValue;
   width?: DimensionValue;
@@ -8,15 +8,9 @@ type Props = {
 };
 
 const Brand = ({ height, width, mode }: Props) => {
-
   return (
     <View testID={'brand-img-wrapper'} style={{ height, width }}>
-      <Image
-        testID={'brand-img'}
-        style={{ width: '100%' }}
-        source={Images.logo}
-        resizeMode={mode}
-      />
+      <Image testID={'brand-img'} style={styles.image} source={Images.logo} resizeMode={mode} />
     </View>
   );
 };
@@ -28,3 +22,7 @@ Brand.defaultProps = {
 };
 
 export default Brand;
+
+const styles = StyleSheet.create({
+  image: { width: '100%' },
+});

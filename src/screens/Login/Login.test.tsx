@@ -37,7 +37,9 @@ describe('Login screen', () => {
     it('shows error when email is empty', async () => {
       render();
       await waitFor(() => screen.getByText('Sign In'));
-      await act(async () => { fireEvent.press(screen.getByText('Sign In')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Sign In'));
+      });
       expect(screen.getByText('Email is required.')).toBeTruthy();
     });
 
@@ -45,7 +47,9 @@ describe('Login screen', () => {
       render();
       await waitFor(() => screen.getByText('Sign In'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'not-an-email');
-      await act(async () => { fireEvent.press(screen.getByText('Sign In')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Sign In'));
+      });
       expect(screen.getByText('Enter a valid email address.')).toBeTruthy();
     });
 
@@ -53,7 +57,9 @@ describe('Login screen', () => {
       render();
       await waitFor(() => screen.getByText('Sign In'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'a@b.com');
-      await act(async () => { fireEvent.press(screen.getByText('Sign In')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Sign In'));
+      });
       expect(screen.getByText('Password is required.')).toBeTruthy();
     });
 
@@ -62,7 +68,9 @@ describe('Login screen', () => {
       await waitFor(() => screen.getByText('Sign In'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'a@b.com');
       fireEvent.changeText(screen.getByPlaceholderText('••••••••'), '12345');
-      await act(async () => { fireEvent.press(screen.getByText('Sign In')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Sign In'));
+      });
       expect(screen.getByText('Password must be at least 6 characters.')).toBeTruthy();
     });
   });
@@ -74,11 +82,15 @@ describe('Login screen', () => {
       await waitFor(() => screen.getByText('Sign In'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), '  A@B.COM  ');
       fireEvent.changeText(screen.getByPlaceholderText('••••••••'), 'password');
-      await act(async () => { fireEvent.press(screen.getByText('Sign In')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Sign In'));
+      });
       await waitFor(() =>
         expect(global.fetch).toHaveBeenCalledWith(
           expect.stringContaining('/auth/login'),
-          expect.objectContaining({ body: JSON.stringify({ email: 'a@b.com', password: 'password' }) }),
+          expect.objectContaining({
+            body: JSON.stringify({ email: 'a@b.com', password: 'password' }),
+          }),
         ),
       );
     });
@@ -89,7 +101,9 @@ describe('Login screen', () => {
       await waitFor(() => screen.getByText('Sign In'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'a@b.com');
       fireEvent.changeText(screen.getByPlaceholderText('••••••••'), 'wrongpass');
-      await act(async () => { fireEvent.press(screen.getByText('Sign In')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Sign In'));
+      });
       await waitFor(() => expect(screen.getByText('Wrong password')).toBeTruthy());
     });
   });

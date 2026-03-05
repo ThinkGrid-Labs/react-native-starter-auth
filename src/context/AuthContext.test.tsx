@@ -3,7 +3,13 @@ import { Text } from 'react-native';
 import { act, render, screen, waitFor } from '@testing-library/react-native';
 import * as Keychain from 'react-native-keychain';
 import { AuthProvider, useAuth } from './AuthContext';
-import { mockAuthError, mockAuthSuccess, mockStoredSession, TEST_CONFIG, TEST_TOKENS, TEST_USER } from '../__tests__/test-utils';
+import {
+  mockAuthError,
+  mockAuthSuccess,
+  mockStoredSession,
+  TEST_CONFIG,
+  TEST_TOKENS,
+} from '../__tests__/test-utils';
 
 // ─── Helper: renders a component that exposes auth state via text ─────────────
 
@@ -45,9 +51,7 @@ describe('AuthProvider — initial state', () => {
     wrap(<AuthStateDisplay />);
     expect(screen.getByTestId('loading').props.children).toBe('true');
     // After no-session keychain check resolves, loading becomes false
-    await waitFor(() =>
-      expect(screen.getByTestId('loading').props.children).toBe('false'),
-    );
+    await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
     expect(screen.getByTestId('authenticated').props.children).toBe('false');
   });
 });
@@ -56,9 +60,7 @@ describe('AuthProvider — session restore', () => {
   it('restores session from Keychain + silent refresh on mount', async () => {
     mockStoredSession();
     wrap(<AuthStateDisplay />);
-    await waitFor(() =>
-      expect(screen.getByTestId('authenticated').props.children).toBe('true'),
-    );
+    await waitFor(() => expect(screen.getByTestId('authenticated').props.children).toBe('true'));
     expect(screen.getByTestId('token').props.children).toBe('refreshed-access');
   });
 
@@ -67,12 +69,13 @@ describe('AuthProvider — session restore', () => {
       username: 'auth_tokens',
       password: JSON.stringify(TEST_TOKENS),
     });
-    (global.fetch as jest.Mock).mockResolvedValue({ ok: false, json: () => Promise.resolve({ message: 'Expired' }) });
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      json: () => Promise.resolve({ message: 'Expired' }),
+    });
 
     wrap(<AuthStateDisplay />);
-    await waitFor(() =>
-      expect(screen.getByTestId('authenticated').props.children).toBe('false'),
-    );
+    await waitFor(() => expect(screen.getByTestId('authenticated').props.children).toBe('false'));
     expect(Keychain.resetGenericPassword).toHaveBeenCalled();
   });
 });
@@ -87,12 +90,13 @@ describe('AuthProvider — login', () => {
       screen.getByTestId('login-btn').props.onPress();
     });
 
-    await waitFor(() =>
-      expect(screen.getByTestId('loading').props.children).toBe('false'),
-    );
+    await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
     expect(Keychain.setGenericPassword).toHaveBeenCalledWith(
       'auth_tokens',
-      JSON.stringify({ accessToken: TEST_TOKENS.accessToken, refreshToken: TEST_TOKENS.refreshToken }),
+      JSON.stringify({
+        accessToken: TEST_TOKENS.accessToken,
+        refreshToken: TEST_TOKENS.refreshToken,
+      }),
       expect.any(Object),
     );
   });
@@ -122,9 +126,7 @@ describe('AuthProvider — register', () => {
       screen.getByTestId('register-btn').props.onPress();
     });
 
-    await waitFor(() =>
-      expect(screen.getByTestId('loading').props.children).toBe('false'),
-    );
+    await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
     expect(Keychain.setGenericPassword).toHaveBeenCalled();
   });
 
@@ -150,12 +152,19 @@ describe('AuthProvider — logout', () => {
     await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
 
     // Login first
-    await act(async () => { screen.getByTestId('login-btn').props.onPress(); });
+    await act(async () => {
+      screen.getByTestId('login-btn').props.onPress();
+    });
     await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
 
     // Then logout — best-effort logout call will fail (fetch not re-mocked), that's OK
-    (global.fetch as jest.Mock).mockResolvedValue({ ok: true, json: () => Promise.resolve({ data: null }) });
-    await act(async () => { screen.getByTestId('logout-btn').props.onPress(); });
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ data: null }),
+    });
+    await act(async () => {
+      screen.getByTestId('logout-btn').props.onPress();
+    });
 
     await waitFor(() => expect(Keychain.resetGenericPassword).toHaveBeenCalled());
   });
@@ -163,11 +172,16 @@ describe('AuthProvider — logout', () => {
 
 describe('AuthProvider — forgotPassword', () => {
   it('resolves without error on success', async () => {
-    (global.fetch as jest.Mock).mockResolvedValue({ ok: true, json: () => Promise.resolve({ data: null }) });
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ data: null }),
+    });
     wrap(<AuthActionsDisplay />);
     await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
 
-    await act(async () => { screen.getByTestId('forgot-btn').props.onPress(); });
+    await act(async () => {
+      screen.getByTestId('forgot-btn').props.onPress();
+    });
     await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
     expect(screen.getByTestId('error').props.children).toBe('');
   });
@@ -177,10 +191,10 @@ describe('AuthProvider — forgotPassword', () => {
     wrap(<AuthActionsDisplay />);
     await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
 
-    await act(async () => { screen.getByTestId('forgot-btn').props.onPress(); });
-    await waitFor(() =>
-      expect(screen.getByTestId('error').props.children).toBe('Email not found'),
-    );
+    await act(async () => {
+      screen.getByTestId('forgot-btn').props.onPress();
+    });
+    await waitFor(() => expect(screen.getByTestId('error').props.children).toBe('Email not found'));
   });
 });
 
@@ -190,10 +204,14 @@ describe('AuthProvider — clearError', () => {
     wrap(<AuthActionsDisplay />);
     await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
 
-    await act(async () => { screen.getByTestId('login-btn').props.onPress(); });
+    await act(async () => {
+      screen.getByTestId('login-btn').props.onPress();
+    });
     await waitFor(() => expect(screen.getByTestId('error').props.children).toBe('Bad request'));
 
-    await act(async () => { screen.getByTestId('clear-btn').props.onPress(); });
+    await act(async () => {
+      screen.getByTestId('clear-btn').props.onPress();
+    });
     expect(screen.getByTestId('error').props.children).toBe('');
   });
 });
@@ -201,7 +219,10 @@ describe('AuthProvider — clearError', () => {
 describe('useAuth', () => {
   it('throws when used outside AuthProvider', () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
-    const BadComponent = () => { useAuth(); return null; };
+    const BadComponent = () => {
+      useAuth();
+      return null;
+    };
     expect(() => render(<BadComponent />)).toThrow('useAuth must be used inside <AuthProvider>');
     consoleError.mockRestore();
   });

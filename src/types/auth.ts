@@ -24,11 +24,11 @@ export interface AuthConfig {
   baseURL: string;
   /** Override individual endpoint paths (defaults shown) */
   endpoints?: {
-    login?: string;         // POST  /auth/login
-    register?: string;      // POST  /auth/register
-    logout?: string;        // POST  /auth/logout
-    refresh?: string;       // POST  /auth/refresh
-    forgotPassword?: string;// POST  /auth/forgot-password
+    login?: string; // POST  /auth/login
+    register?: string; // POST  /auth/register
+    logout?: string; // POST  /auth/logout
+    refresh?: string; // POST  /auth/refresh
+    forgotPassword?: string; // POST  /auth/forgot-password
   };
   /** Keychain service name used to namespace stored credentials */
   keychainService?: string;
@@ -49,6 +49,6 @@ export interface AuthContextValue extends AuthState {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
-  forgotPassword: (email: string) => Promise<void>;
+  forgotPassword: (email: string) => Promise<boolean>;
   clearError: () => void;
 }

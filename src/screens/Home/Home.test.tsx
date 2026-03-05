@@ -2,7 +2,7 @@ import React from 'react';
 import { act, fireEvent, screen, waitFor } from '@testing-library/react-native';
 import * as Keychain from 'react-native-keychain';
 import Home from './Home';
-import { mockStoredSession, renderWithAuth, TEST_USER } from '../../__tests__/test-utils';
+import { mockStoredSession, renderWithAuth } from '../../__tests__/test-utils';
 
 describe('Home screen', () => {
   it('renders welcome message when user has no name', async () => {
@@ -30,7 +30,9 @@ describe('Home screen', () => {
     });
     renderWithAuth(<Home />);
     await waitFor(() => screen.getByText('Sign Out'));
-    await act(async () => { fireEvent.press(screen.getByText('Sign Out')); });
+    await act(async () => {
+      fireEvent.press(screen.getByText('Sign Out'));
+    });
     await waitFor(() => expect(Keychain.resetGenericPassword).toHaveBeenCalled());
   });
 });

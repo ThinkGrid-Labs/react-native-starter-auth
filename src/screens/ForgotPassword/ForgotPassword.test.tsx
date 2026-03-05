@@ -4,8 +4,7 @@ import ForgotPassword from './ForgotPassword';
 import { mockAuthError, mockNavigation, renderWithAuth } from '../../__tests__/test-utils';
 
 const nav = mockNavigation();
-const render = () =>
-  renderWithAuth(<ForgotPassword navigation={nav as any} route={{} as any} />);
+const render = () => renderWithAuth(<ForgotPassword navigation={nav as any} route={{} as any} />);
 
 describe('ForgotPassword screen', () => {
   describe('rendering', () => {
@@ -25,7 +24,9 @@ describe('ForgotPassword screen', () => {
     it('shows error when email is empty', async () => {
       render();
       await waitFor(() => screen.getByText('Send Reset Link'));
-      await act(async () => { fireEvent.press(screen.getByText('Send Reset Link')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Send Reset Link'));
+      });
       expect(screen.getByText('Email is required.')).toBeTruthy();
     });
 
@@ -33,7 +34,9 @@ describe('ForgotPassword screen', () => {
       render();
       await waitFor(() => screen.getByText('Send Reset Link'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'not-email');
-      await act(async () => { fireEvent.press(screen.getByText('Send Reset Link')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Send Reset Link'));
+      });
       expect(screen.getByText('Enter a valid email address.')).toBeTruthy();
     });
   });
@@ -47,7 +50,9 @@ describe('ForgotPassword screen', () => {
       render();
       await waitFor(() => screen.getByText('Send Reset Link'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'jane@test.com');
-      await act(async () => { fireEvent.press(screen.getByText('Send Reset Link')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Send Reset Link'));
+      });
       await waitFor(() => expect(screen.getByText('Check your email')).toBeTruthy());
       expect(screen.getByText('jane@test.com')).toBeTruthy();
     });
@@ -60,7 +65,9 @@ describe('ForgotPassword screen', () => {
       render();
       await waitFor(() => screen.getByText('Send Reset Link'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'jane@test.com');
-      await act(async () => { fireEvent.press(screen.getByText('Send Reset Link')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Send Reset Link'));
+      });
       await waitFor(() => screen.getByText('Back to Sign In'));
       fireEvent.press(screen.getByText('Back to Sign In'));
       expect(nav.navigate).toHaveBeenCalledWith('Login');
@@ -73,7 +80,9 @@ describe('ForgotPassword screen', () => {
       render();
       await waitFor(() => screen.getByText('Send Reset Link'));
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'jane@test.com');
-      await act(async () => { fireEvent.press(screen.getByText('Send Reset Link')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Send Reset Link'));
+      });
       await waitFor(() => expect(screen.getByText('Email not found')).toBeTruthy());
     });
   });

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -29,7 +29,9 @@ const Login = ({ navigation }: Props) => {
 
   // Clear API error when user starts typing
   useEffect(() => {
-    if (error) clearError();
+    if (error) {
+      clearError();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 
@@ -49,11 +51,13 @@ const Login = ({ navigation }: Props) => {
     return Object.keys(errors).length === 0;
   };
 
-  const handleLogin = useCallback(async () => {
+  const handleLogin = async () => {
     Keyboard.dismiss();
-    if (!validate()) return;
+    if (!validate()) {
+      return;
+    }
     await login(email.trim().toLowerCase(), password);
-  }, [email, password, login]);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -109,12 +113,7 @@ const Login = ({ navigation }: Props) => {
           <Text style={styles.forgotText}>Forgot password?</Text>
         </TouchableOpacity>
 
-        <Button
-          title="Sign In"
-          onPress={handleLogin}
-          loading={isLoading}
-          style={styles.btn}
-        />
+        <Button title="Sign In" onPress={handleLogin} loading={isLoading} style={styles.btn} />
 
         <View style={styles.footerRow}>
           <Text style={styles.footerText}>Don't have an account? </Text>

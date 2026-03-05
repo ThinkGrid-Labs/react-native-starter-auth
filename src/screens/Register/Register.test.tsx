@@ -11,7 +11,12 @@ import {
 const nav = mockNavigation();
 const render = () => renderWithAuth(<Register navigation={nav as any} route={{} as any} />);
 
-const fillForm = (name = 'Alice', email = 'alice@test.com', password = 'password1', confirm = 'password1') => {
+const fillForm = (
+  name = 'Alice',
+  email = 'alice@test.com',
+  password = 'password1',
+  confirm = 'password1',
+) => {
   fireEvent.changeText(screen.getByPlaceholderText('Jane Doe'), name);
   fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), email);
   // Two password fields: 'Min. 8 characters' and '••••••••'
@@ -40,7 +45,9 @@ describe('Register screen', () => {
     it('shows error when name is empty', async () => {
       render();
       await waitFor(() => screen.getByText('Create Account'));
-      await act(async () => { fireEvent.press(screen.getByText('Create Account')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Create Account'));
+      });
       expect(screen.getByText('Full name is required.')).toBeTruthy();
     });
 
@@ -49,7 +56,9 @@ describe('Register screen', () => {
       await waitFor(() => screen.getByText('Create Account'));
       fireEvent.changeText(screen.getByPlaceholderText('Jane Doe'), 'Alice');
       fireEvent.changeText(screen.getByPlaceholderText('you@example.com'), 'bad-email');
-      await act(async () => { fireEvent.press(screen.getByText('Create Account')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Create Account'));
+      });
       expect(screen.getByText('Enter a valid email address.')).toBeTruthy();
     });
 
@@ -57,7 +66,9 @@ describe('Register screen', () => {
       render();
       await waitFor(() => screen.getByText('Create Account'));
       fillForm('Alice', 'alice@test.com', 'short', 'short');
-      await act(async () => { fireEvent.press(screen.getByText('Create Account')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Create Account'));
+      });
       expect(screen.getByText('Password must be at least 8 characters.')).toBeTruthy();
     });
 
@@ -65,7 +76,9 @@ describe('Register screen', () => {
       render();
       await waitFor(() => screen.getByText('Create Account'));
       fillForm('Alice', 'alice@test.com', 'password1', 'different1');
-      await act(async () => { fireEvent.press(screen.getByText('Create Account')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Create Account'));
+      });
       expect(screen.getByText('Passwords do not match.')).toBeTruthy();
     });
   });
@@ -76,7 +89,9 @@ describe('Register screen', () => {
       render();
       await waitFor(() => screen.getByText('Create Account'));
       fillForm();
-      await act(async () => { fireEvent.press(screen.getByText('Create Account')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Create Account'));
+      });
       await waitFor(() =>
         expect(global.fetch).toHaveBeenCalledWith(
           expect.stringContaining('/auth/register'),
@@ -92,7 +107,9 @@ describe('Register screen', () => {
       render();
       await waitFor(() => screen.getByText('Create Account'));
       fillForm();
-      await act(async () => { fireEvent.press(screen.getByText('Create Account')); });
+      await act(async () => {
+        fireEvent.press(screen.getByText('Create Account'));
+      });
       await waitFor(() => expect(screen.getByText('Email already in use')).toBeTruthy());
     });
   });
