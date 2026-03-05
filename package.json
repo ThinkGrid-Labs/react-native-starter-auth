@@ -1,41 +1,53 @@
 {
-  "name": "StarterAuth",
-  "version": "0.0.1",
-  "private": true,
+  "name": "@think-grid-labs/react-native-starter-auth",
+  "version": "2.0.0",
+  "description": "Production-ready React Native authentication starter — secure Keychain token storage, full auth flows, zero Redux.",
+  "private": false,
+  "main": "src/index.ts",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
+    "lint": "eslint src --ext .ts,.tsx",
     "start": "react-native start",
     "test": "jest",
     "type-check": "tsc",
     "test:report": "jest --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --coverage",
-    "pod-install": "cd ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install && cd .."
+    "pod-install": "cd ios && RCT_NEW_ARCH_ENABLED=1 bundle exec pod install && cd ..",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "validate": "yarn type-check && yarn lint && yarn format:check && yarn test",
+    "release": "release-it --only-version",
+    "prepare": "lefthook install",
+    "typecheck": "tsc --noEmit",
+    "example": "yarn workspace react-native-starter-auth-example"
   },
-  "dependencies": {
-    "@react-native-masked-view/masked-view": "^0.2.9",
-    "@react-navigation/bottom-tabs": "^6.5.8",
-    "@react-navigation/native": "^6.1.7",
-    "@react-navigation/stack": "^6.3.17",
-    "@reduxjs/toolkit": "^1.9.5",
-    "react": "18.2.0",
-    "react-native": "0.72.1",
-    "react-native-gesture-handler": "^2.12.0",
-    "react-native-keychain": "^8.1.2",
-    "react-native-mmkv": "^2.10.0",
-    "react-native-reanimated": "^3.3.0",
-    "react-native-safe-area-context": "^4.6.3",
-    "react-native-screens": "^3.22.0",
-    "react-redux": "^8.1.1",
-    "redux-persist": "^6.0.0"
-  },
+  "keywords": [
+    "react-native",
+    "authentication",
+    "auth",
+    "starter",
+    "boilerplate",
+    "keychain",
+    "secure-storage",
+    "login",
+    "register",
+    "typescript"
+  ],
+  "author": "AkosiDencio <dennis@thinkgrid.dev>",
+  "license": "MIT",
+  "files": [
+    "src/",
+    "@types/",
+    "README.md"
+  ],
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
     "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.7",
-    "@react-navigation/devtools": "^6.0.19",
     "@testing-library/jest-native": "^5.4.2",
     "@testing-library/react-native": "^12.1.2",
     "@tsconfig/react-native": "^3.0.0",
@@ -54,12 +66,79 @@
     "jest": "^29.2.1",
     "metro-react-native-babel-preset": "0.76.5",
     "prettier": "^2.4.1",
-    "react-native-flipper": "^0.202.0",
     "react-test-renderer": "18.2.0",
-    "redux-flipper": "^2.0.2",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "react": "18.2.0",
+    "react-native": "0.72.1",
+    "react-native-keychain": "^8.1.2",
+    "@react-navigation/native": "^6.1.7",
+    "@react-navigation/stack": "^6.3.17",
+    "react-native-gesture-handler": "^2.12.0",
+    "react-native-reanimated": "^3.3.0",
+    "react-native-screens": "^3.22.0",
+    "react-native-safe-area-context": "^4.6.3",
+    "@react-native-masked-view/masked-view": "^0.2.9",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "commitlint": "^19.8.1",
+    "lefthook": "^2.0.3",
+    "release-it": "^19.0.4"
   },
   "engines": {
-    "node": ">=16"
-  }
+    "node": ">=22"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0",
+    "react-native-keychain": ">=8.0.0",
+    "@react-navigation/native": ">=6.0.0",
+    "@react-navigation/stack": ">=6.0.0",
+    "react-native-gesture-handler": ">=2.0.0",
+    "react-native-reanimated": ">=3.0.0",
+    "react-native-screens": ">=3.0.0",
+    "react-native-safe-area-context": ">=4.0.0",
+    "@react-native-masked-view/masked-view": ">=0.2.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThinkGrid-Labs/react-native-starter-auth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ThinkGrid-Labs/react-native-starter-auth/issues"
+  },
+  "homepage": "https://github.com/ThinkGrid-Labs/react-native-starter-auth#readme",
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}"
+    },
+    "npm": {
+      "publish": true
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/conventional-changelog": {
+        "preset": {
+          "name": "angular"
+        },
+        "infile": "CHANGELOG.md"
+      }
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "workspaces": [
+    "example"
+  ]
 }

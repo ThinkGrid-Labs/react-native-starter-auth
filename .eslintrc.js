@@ -1,21 +1,34 @@
 module.exports = {
-  env: {
-    'jest/globals': true,
-  },
   root: true,
-  extends: '@react-native',
+  extends: [
+    '@react-native',
+    'plugin:@typescript-eslint/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   rules: {
-    'react-hooks/exhaustive-deps': 'off',
-    quotes: ['error', 'single'],
-    'object-curly-spacing': ['error', 'always'],
-    'array-bracket-spacing': ['error', 'never'],
-    'react/require-default-props': ['error'],
-    'react/default-props-match-prop-types': ['error'],
-    'react/sort-prop-types': ['error'],
+    // TypeScript
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-non-null-assertion': 'warn',
+
+    // React
+    'react/react-in-jsx-scope': 'off',     // not needed in RN 0.72+
+    'react-hooks/exhaustive-deps': 'warn',
+    'react-hooks/rules-of-hooks': 'error',
+
+    // General
+    'no-console': ['warn', { allow: ['warn', 'error'] }],
+    'prefer-const': 'error',
+    'no-var': 'error',
   },
-  settings: {
-    'import/resolver': {
-      'babel-module': {},
-    },
-  },
+  ignorePatterns: [
+    'node_modules/',
+    'android/',
+    'ios/',
+    'coverage/',
+    '*.config.js',
+    'jest.setup.js',
+  ],
 };

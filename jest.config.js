@@ -1,19 +1,19 @@
 module.exports = {
   preset: 'react-native',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  setupFilesAfterEnv: [
-    './node_modules/react-native-gesture-handler/jestSetup.js',
-    '<rootDir>/jest.setup.js',
-  ],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|@react-native|@react-native-community|@react-navigation)',
+    'node_modules/(?!(jest-)?react-native|@react-native|@react-native-community|@react-navigation|react-native-keychain)',
   ],
   collectCoverageFrom: [
-    '<rootDir>/src/Components/**/*.jsx',
-    '<rootDir>/src/App.jsx',
-    '<rootDir>/src/Components/**/*.tsx',
-    '<rootDir>/src/App.tsx',
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/index.ts',
+    '!src/assets/**',
   ],
   coverageReporters: ['html', 'text', 'text-summary', 'cobertura'],
   testMatch: ['**/*.test.ts?(x)', '**/*.test.js?(x)'],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
 };

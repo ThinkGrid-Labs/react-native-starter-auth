@@ -1,36 +1,32 @@
-import 'whatwg-fetch';
-import 'react-native-gesture-handler/jestSetup';
 import '@testing-library/jest-native/extend-expect';
+import 'react-native-gesture-handler/jestSetup';
 
+// Reanimated mock
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
 
-jest.mock('redux-persist', () => {
-  const real = jest.requireActual('redux-persist');
-  return {
-    ...real,
-    persistReducer: jest
-      .fn()
-      .mockImplementation((config, reducers) => reducers),
-  };
-});
-
-// Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
+// Animated native driver
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
-jest.mock('react-i18next', () => ({
-  // this mock makes sure any components using the translation hook can use it without a warning being shown
-  useTranslation: () => {
-    return {
-      t: str => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {}),
-      },
-    };
-  },
-  initReactI18next: {
-    type: '3rdParty',
-    init: jest.fn(),
-  },
+// Keychain — default to no stored credentials; override per test
+jest.mock('react-native-keychain', () => ({
+  setGenericPassword: jest.fn().mockResolvedValue(true),
+  getGenericPassword: jest.fn().mockResolvedValue(false),
+  resetGenericPassword: jest.fn().mockResolvedValue(true),
 }));
+
+// Global fetch mock — override per test
+global.fetch = jest.fn();
+
+beforeEach(() => {
+  jest.clearAllMocks();
+  // Default: no stored session
+  const Keychain = require('react-native-keychain');
+  Keychain.getGenericPassword.mockResolvedValue(false);
+  // Default: fetch fails fast so tests that don't care don't hang
+  (global.fetch as jest.Mock).mockResolvedValue({
+    ok: false,
+    json: () => Promise.resolve({ message: 'Not mocked' }),
+  });
+});

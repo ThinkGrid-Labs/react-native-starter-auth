@@ -1,41 +1,37 @@
 import React, { useEffect } from 'react';
-import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { Brand } from '../../components';
+import { useAuth } from '../../context/AuthContext';
 import { ApplicationScreenProps } from '../../../@types/navigation';
 
 const Startup = ({ navigation }: ApplicationScreenProps) => {
-
-  const init = async () => {
-    await new Promise(resolve =>
-      setTimeout(() => {
-        resolve(true);
-      }, 2000),
-    );
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Main' }],
-    });
-  };
+  const { isLoading, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    init();
-  }, []);
+    if (isLoading) return;
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: isAuthenticated ? 'Main' : 'Auth' }],
+    });
+  }, [isLoading, isAuthenticated, navigation]);
 
   return (
     <View style={styles.wrapper}>
-      <Brand />
-      <ActivityIndicator size={'large'} style={{ marginVertical: 60 }} />
+      <Brand height={120} width={120} />
+      <ActivityIndicator size="large" color="#2563EB" style={styles.spinner} />
     </View>
   );
 };
 
+export default Startup;
+
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
-    flexDirection: 'column',
+    backgroundColor: '#F9FAFB',
     alignItems: 'center',
     justifyContent: 'center',
   },
-})
-
-export default Startup;
+  spinner: { marginTop: 40 },
+});

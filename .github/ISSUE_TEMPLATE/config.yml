@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Feature Request 💡
+    url: https://github.com/ThinkGrid-Labs/react-native-starter-auth/discussions/new?category=ideas
+    about: Have a feature request? Start a discussion instead of opening an issue.
+  - name: Questions & Discussions 💬
+    url: https://github.com/ThinkGrid-Labs/react-native-starter-auth/discussions
+    about: Need help using the library? Ask in discussions.
