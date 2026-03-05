@@ -50,8 +50,9 @@ describe('AuthProvider — initial state', () => {
   it('starts with isLoading true, not authenticated', async () => {
     wrap(<AuthStateDisplay />);
     expect(screen.getByTestId('loading').props.children).toBe('true');
-    // After no-session keychain check resolves, loading becomes false
-    await waitFor(() => expect(screen.getByTestId('loading').props.children).toBe('false'));
+    // Flush deferred effects + async session restore (no stored tokens → loading: false)
+    await act(async () => {});
+    expect(screen.getByTestId('loading').props.children).toBe('false');
     expect(screen.getByTestId('authenticated').props.children).toBe('false');
   });
 });
