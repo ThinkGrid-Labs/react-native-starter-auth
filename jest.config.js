@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'react-native',
+  fakeTimers: { enableGlobally: false },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   transformIgnorePatterns: [

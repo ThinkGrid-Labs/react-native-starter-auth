@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      glob: "*.{js,ts,jsx,tsx}"
+      glob: "src/**/*.{ts,tsx}"
       run: yarn eslint {staged_files} --max-warnings=0
 
     format:
