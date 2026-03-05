@@ -1,6 +1,6 @@
 {
   "name": "@think-grid-labs/react-native-starter-auth",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Production-ready React Native authentication starter — secure Keychain token storage, full auth flows, zero Redux.",
   "private": false,
   "main": "src/index.ts",
@@ -120,7 +120,7 @@
   "homepage": "https://github.com/ThinkGrid-Labs/react-native-starter-auth#readme",
   "release-it": {
     "git": {
-      "commitMessage": "chore: release ${version}",
+      "commitMessage": "chore: release ${version} [skip ci]",
       "tagName": "v${version}"
     },
     "npm": {
