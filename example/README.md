@@ -5,7 +5,6 @@ This app demonstrates all integration patterns for the library.
 ## Running the example
 
 ```bash
-# From the repo root
 cd example
 
 yarn install

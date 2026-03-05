@@ -19,8 +19,7 @@
     "validate": "yarn type-check && yarn lint && yarn format:check && yarn test",
     "release": "release-it --only-version",
     "prepare": "lefthook install",
-    "typecheck": "tsc --noEmit",
-    "example": "yarn workspace react-native-starter-auth-example"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "react-native",
@@ -137,8 +136,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "workspaces": [
-    "example"
-  ]
+  }
 }
