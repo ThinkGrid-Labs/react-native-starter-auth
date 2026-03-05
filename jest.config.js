@@ -1,7 +1,7 @@
 module.exports = {
   preset: 'react-native',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   transformIgnorePatterns: [
     'node_modules/(?!(jest-)?react-native|@react-native|@react-native-community|@react-navigation|react-native-keychain)',
   ],
@@ -10,6 +10,8 @@ module.exports = {
     '!src/**/*.d.ts',
     '!src/index.ts',
     '!src/assets/**',
+    '!src/**/*.test.{ts,tsx}',
+    '!src/__tests__/**',
   ],
   coverageReporters: ['html', 'text', 'text-summary', 'cobertura'],
   testMatch: ['**/*.test.ts?(x)', '**/*.test.js?(x)'],

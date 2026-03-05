@@ -11,5 +11,7 @@
       "@/*": ["./src/*"],
       "types/*": ["./@types/*"]
     }
-  }
+  },
+  "include": ["src/**/*", "@types/**/*"],
+  "exclude": ["node_modules", "example", "coverage", "**/*.test.ts", "**/*.test.tsx"]
 }

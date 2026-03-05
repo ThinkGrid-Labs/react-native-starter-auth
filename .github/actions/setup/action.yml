@@ -9,7 +9,8 @@ runs:
       with:
         node-version-file: .nvmrc
         cache: 'yarn'
+        registry-url: 'https://registry.npmjs.org'
 
     - name: Install dependencies
-      run: yarn install --frozen-lockfile
+      run: yarn install
       shell: bash
