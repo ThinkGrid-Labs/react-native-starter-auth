@@ -1,10 +1,12 @@
 import '@testing-library/jest-native/extend-expect';
 import 'react-native-gesture-handler/jestSetup';
 
+// react-native preset's setup.js calls jest.useFakeTimers() in setupFiles.
+// Override it here (setupFilesAfterEnv runs after) so waitFor works correctly.
+jest.useRealTimers();
+
 // Reanimated mock
-jest.mock('react-native-reanimated', () =>
-  require('react-native-reanimated/mock'),
-);
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
 
 // Animated native driver
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
