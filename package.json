@@ -36,7 +36,12 @@
   "author": "AkosiDencio <dennis@thinkgrid.dev>",
   "license": "MIT",
   "files": [
-    "src/",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.png",
+    "!src/**/*.test.ts",
+    "!src/**/*.test.tsx",
+    "!src/__tests__/**",
     "@types/",
     "README.md"
   ],
